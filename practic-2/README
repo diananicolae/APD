@@ -1,0 +1,11 @@
+Nicolae Mihaela-Diana, 335CA
+
+Pentru rezolvarea primei parti am implementat algoritmul OETS
+folosind pseudocodul dat, in care fiecare proces a comunicat
+pe rand cu vecinul din stanga sau dreapta, sortand valorile.
+
+In a doua parte, pentru fiecare proces am creat un vector ce 
+stocheaza toate valorile proceselor dinaintea lui. Mai intai
+fiecare proces primeste valorile de la procesul anterior, 
+completeaza vectorul cu valoarea lui si il trimite procesului
+urmator (asemanator cu algoritmul inel).

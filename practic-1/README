@@ -1,0 +1,5 @@
+Nicolae Mihaela-Diana, 335CA
+
+    Pentru a rezolva problema am folosit o variabila conditionata si un mutex.
+De fiecare data cand un thread termina sleep-ul, trimite semnalul, iar
+thread-ul 0 asteapta si la primirea semnalului afiseaza.
