@@ -1,0 +1,28 @@
+Nicolae Mihaela-Diana, 335CA
+
+Tema 1 - APD
+Paralelizarea unui algoritm genetic
+
+    Pentru a rezolva aceasta tema am pornit de la implementare secventiala a
+algoritmului genetic si am paralelizat calculele folosind thread-uri din Pthreads.
+
+    Am modificat functia run_genetic_algorithm astfel incat aceasta sa creeze un
+numar de thread-uri necesare, dat ca parametru in linia de comanda, functia de
+thread fiind genetic_algorithm_thread_function. Pentru a putea trimite parametri
+functiei de thread am creat structura genetic_algorithm_arguments in care am
+incapsulat toate variabilele necesare. Toate calculele algoritmului genetic au
+fost mutate in functia de thread, lasand in run_genetic_algorithm doar crearea
+si asteptarea firelor de executie.
+
+    In functia de thread genetic_algorithm_thread_function am paralelizat toate
+instructiunile for (mai putin iteratia pe generatii, care functioneaza secvential)
+astfel incat fiecare thread sa itereze pe o sectiune, calculand pentru fiecare
+indexul de start si de stop. Am folosit o bariera pentru a asigura sincronizarea
+tuturor thread-urile dupa fiecare instructiune paralelizata. Deoarece nu le-am
+putut paraleliza, sortarea si afisarea se vor face doar pe primul thread.
+
+    Pentru a aduce un plus de optimizare, am modificat functia de comparare
+folosita pentru sortarea generatiilor, prin calcularea si retinerea numarului
+de obiecte pentru fiecare individ in for-ul principal, inainte de sortare. Astfel,
+evitam overhead-ul creat prin calcularea acestei valori la fiecare comparare intre
+indivizi.

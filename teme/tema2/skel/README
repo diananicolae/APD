@@ -1,0 +1,30 @@
+Nicolae Mihaela-Diana, 335CA
+
+Tema 2 - APD
+Procesarea de documente folosind paradigma Map-Reduce
+
+Scopul acestei teme a fost implementarea unui program paralel in Java ce poate procesa
+un set de documente text, determinand rangul si cuvintele de lungime maxima din fiecare.
+
+Paralelizarea procesarii documentelor a fost realizata folosind modelul Map-Reduce, prin
+care fiecare document este fragmentat in parti de dimensiune fixa ce sunt procesate in
+paralel (Map). Pentru fiecare fragment obtinem un rezultat format dintr-un dictionar
+partial ce contine lungimea cuvintelor si numarul de aparitii ale acestora, precum si
+o lista ce contine cuvintele de lungime maxima. Aceste rezultate sunt combinate, pentru
+a obtine un rezultat ce caracterizeaza intregul document (Reduce), cu ajutorul caruia
+putem determina rangul si numarul de cuvinte maximale.
+
+Pentru paralelizare am folosit ForkJoinPool si o lista de task-uri ce va contine pe rand
+task-uri ce executa fie operatia de Map, fie operatia de Reduce. Nivelul de paralelism al
+ForkJoinPool-ului este dat de numarul de workeri dat ca argument. Am creat o clasa generica
+numita Task ce va contine un task de tip Map sau Reduce, si o interfata numita MapReduce
+care va fi extinsa de clasele Map si Reduce, in care vor fi implementate operatiile cu
+acelasi nume, specifice datelor de intrare.
+
+Operatia Map va parsa fragmentul de text si il va imparti in cuvinte, creand un rezultat
+de tip Output ce contine lista de cuvinte maximale si dictionarul. Aceste rezultate vor fi
+pasate operatiei de Reduce care le va combina si va crea un rezultat de tip Output pentru
+intregul document, calculand rangul, lungimea maxima si numarul de cuvinte cu acea lungime.
+
+In final, in fisierul de output, pentru fiecare fisier vor fi afisate aceste informatii,
+in ordinea descrescatoare a rangului.

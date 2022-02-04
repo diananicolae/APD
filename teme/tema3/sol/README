@@ -1,0 +1,43 @@
+Nicolae Mihaela-Diana, 335CA
+
+Tema 3 - APD
+Calcule colaborative in sisteme distribuite
+
+Scopul acestei teme este implementarea unui program distribuit in MPI in care procesele sunt
+grupate intr-o topologie formata din trei clustere. Fiecare cluster are un coordonator, acestia
+putand comunica intre ei, si un numar arbitrar de procese worker, care pot comunica doar cu
+coordonatorul.
+
+Cu ajutorul coordonatorilor, procesele worker lucreaza impreuna pentru rezolvarea unor task-uri
+computationale, realizate prin stabilirea topologiei si diseminarea ei catre toate procesele,
+iar apoi prin impartirea calculelor in mod echilibrat si realizarea acestora de catre workeri.
+
+1. Stabilirea topologiei
+
+Procesele coordonator citesc informatii despre topologie din trei fisiere de intrare, fiecare
+afland ce procese se afla in clusterul lui. Fiecare coordonator va informa ceilalti coordonatori
+despre workerii lui, si implicit va afla despre workerii celorlalti coordonatori.
+
+Atunci cand toti coordonatorii au aflat topologia completa, isi instiinteaza workerii despre
+coordonatorul lor si le trimite topologia. Dupa ce toti workerii primesc informatiile de la
+coordonatori, fiecare proces va cunoaste topologia intregului sistem si o va putea afisa.
+
+2. Realizarea calculelor
+
+Aceasta parte este coordonata de procesul 0 (root), care genereaza un vector pe care il
+populeaza, dupa care il va distribui proceselor coordonator, care au rolul de a-l distribui
+mai departe proceselor worker.
+
+Root calculeaza dimensiunea fragmentelor pe care le va primi fiecare worker impartind numarul
+elementelor vectorului la numarul total de procese worker. In cazul in care impartirea se
+face cu rest, pentru echilibrarea calculelor surplusul va fi distribuit prin adaugarea
+unui singur element in plus la vectorul primit de anumiti workeri.
+
+In functie de aceasta impartire, root va trimite celorlalti coordonatori un fragment din vector,
+dupa care coordonatorii vor face aceleasi calcule pentru a realiza impartirea vectorului intre
+workerii sai.
+
+Workerii primesc fragmentul de vector si realizeaza calculele, si anume inmultirea cu doi, dupa
+care va trimite fragmentul inapoi la coordonator. Atunci cand un coordonator primeste toate
+fragmentele inapoi de la workerii sai, va reasambla vectorul si il va trimite procesului root.
+In final, root va obtine vectorul final, pe care il va afisa.
